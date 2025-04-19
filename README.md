@@ -86,12 +86,11 @@ python train.py --config config/SSD/fold1_resnet50.yaml
 本部分展示了以 **VGG16** 作为主干网络（Backbone）在 **Fold 0** 条件下训练和测试过程中记录的 **Loss 曲线**，用于直观观察模型的收敛情况和性能变化。
 
 - **训练集 Loss 曲线：**  
-  ![Train Loss Curve](./results/loss_curves/vgg16_fold0_train.png)
+  ![Train Loss Curve](./loss_curves/loss_train.png)
 
 - **验证集 Loss 曲线：**  
-  ![Validation Loss Curve](./results/loss_curves/vgg16_fold0_val.png)
+  ![Validation Loss Curve](./loss_curves/val_train.png)
 
-> 曲线图文件默认保存在：`results/loss_curves/` 目录下。
 ---
 ## 消融实验
 ## 模块间组件分析（基于 VGG16）
