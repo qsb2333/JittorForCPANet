@@ -67,7 +67,7 @@ python train.py --config config/SSD/fold1_resnet50.yaml
 ---
 
 ## 基准实验
-### 📌 注意事项
+### 注意事项
 
 - 原论文未提供其 ResNet 变体的预训练模型参数。因此，表格中使用的 **ResNet-50** 实验结果是基于 **标准 ImageNet 预训练参数** 的，可能与原论文报告的结果存在较大差异，仅供参考。
   
@@ -91,7 +91,7 @@ python train.py --config config/SSD/fold1_resnet50.yaml
 - **验证集 Loss 曲线：**  
   ![Validation Loss Curve](./results/loss_curves/vgg16_fold0_val.png)
 
-> 💡 曲线图文件默认保存在：`results/loss_curves/` 目录下。
+> 曲线图文件默认保存在：`results/loss_curves/` 目录下。
 ---
 ## 消融实验
 ## 模块间组件分析（基于 VGG16）
