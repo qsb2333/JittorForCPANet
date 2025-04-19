@@ -89,7 +89,7 @@ python train.py --config config/SSD/fold1_resnet50.yaml
   ![Train Loss Curve](./loss_curves/loss_train.png)
 
 - **验证集 Loss 曲线：**  
-  ![Validation Loss Curve](./loss_curves/val_train.png)
+  ![Validation Loss Curve](./loss_curves/loss_val.png)
 
 ---
 ## 消融实验
