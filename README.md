@@ -91,9 +91,8 @@ python train.py --config config/SSD/fold1_resnet50.yaml
   ![Train Loss Curve](./loss_curves/loss_train.png)
 
 - **验证集 Loss 曲线：**  
-  ![Validation Loss Curve](./loss_curves/val_train.png)
+  ![Validation Loss Curve](./loss_curves/loss_val.png)
 
-> 曲线图文件默认保存在：`results/loss_curves/` 目录下。
 ---
 ## 消融实验
 ## 模块间组件分析（基于 VGG16）
