@@ -143,8 +143,13 @@ class cpanet(nn.Module):
 
         #空间压缩注意力
         self.SSA = SSA()
+        # 全卷积解码器(用于消融实验)
+        # self.SSA = nn.Sequential(
+        #     nn.Conv2d(256, 2, kernel_size=(1, 1))
+        # )
         #跨位置代理
         self.CPP = CPP(reduce_dim)
+        # self.CPP = nn.AdaptiveAvgPool2d((1,1))
 
     def execute(self, x, s_x, s_y,y=None):
         #(4,3,200,200)
