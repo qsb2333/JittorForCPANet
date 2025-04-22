@@ -73,10 +73,3 @@ class SSA(nn.Module):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
 
-# 测试模型
-if __name__ == "__main__":
-    model = SSA()
-    input = jt.randn((4, 256, 200, 200))
-    print("Input shape:", input.shape)
-    out = model(input)
-    print("Output shape:", out.shape)
