@@ -306,7 +306,7 @@ optimizer.step(loss)  # 自动完成 backward + update
 ----------
 ## 总结
 
-本次实验基于 **Jittor 框架** 复现了 **[CPANet](https://ieeexplore.ieee.org/document/10049179)** 的网络结构。实验过程中，虽然成功实现了 CPANet 的整体网络逻辑和训练流程，但复现效果仍存在一定的差距。
+本次实验基于 **Jittor 框架** 复现了 **[CPANet](https://ieeexplore.ieee.org/document/10049179)** 的网络结构。实验过程中，虽然成功实现了 CPANet 的整体网络逻辑和训练流程，但复现效果和原论文仍存在一定的差距。
 
 ### 存在问题与挑战
 - 对 Jittor 框架的使用尚不够熟练，尤其在某些函数接口与 PyTorch 的差异方面（详见前述差异分析部分）；
