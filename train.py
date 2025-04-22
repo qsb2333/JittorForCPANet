@@ -21,7 +21,7 @@ cv2.setNumThreads(0)          # 禁用 OpenCV 多线程
 
 def get_parser():
     parser = argparse.ArgumentParser(description='Few-Shot Semantic Segmentation')
-    parser.add_argument('--config', type=str, default='config/SSD/fold1_vgg16.yaml', help='config file')
+    parser.add_argument('--config', type=str, default='config/SSD/fold0_vgg16.yaml', help='config file')
     args = parser.parse_args()
     cfg = load_cfg_from_yamlFile(args.config)
     return cfg
