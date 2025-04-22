@@ -19,7 +19,7 @@
 ## 环境配置
 
 ```yaml
-GPU: NVIDIA GeForce RTX 3050 Laptop GPU (4 GB),
+GPU: NVIDIA GeForce RTX 3050 Laptop GPU (4 GB)
 CPU: 11th Gen Intel(R) Core(TM) i5-11260H @ 2.60GHz 2.61GHz
 Python: 3.8.20
 CUDA: 11.2  
