@@ -119,7 +119,7 @@ python train.py --config config/SSD/fold0_resnet50.yaml
 - **Baseline 设置：**  
   - 未使用 CPP 模块，而是采用**掩码全局平均池化**（Masked GAP）提取缺陷前景信息；
   - 移除了**SA 模块**；
-  - 解码器由**全卷积解码器**替代了原有的**空间注意力挤压解码器SSA**。
+  - 解码器由**全卷积解码器**替代了原有的**空间挤压注意力SSA**。
 
 - **实验方式：**  
   仅展示 **1-shot** 下的模型性能，指标包括 `Mean IoU (MIoU)` 和 `Foreground-Background IoU (FB-IoU)`。
