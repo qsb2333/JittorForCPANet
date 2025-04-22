@@ -92,7 +92,7 @@ def vgg16_bn(pretrained=False, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['D'], batch_norm=True), **kwargs)
     if pretrained:
-        model_path = '/root/autodl-tmp/jittorProject/jittorForCPANet/initmodel/vgg16_bn.pth'
+        model_path = './initmodel/vgg16_bn.pth'
         model.load_state_dict(jt.load(model_path))
     return model
 
