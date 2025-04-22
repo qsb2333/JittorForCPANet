@@ -85,14 +85,12 @@ def main():
     global logger, writer
     logger = get_logger()
     writer = SummaryWriter(args.save_path)
-    # \033[1;36m 淡青色字体的 ANSI 控制符
     logger.info("\033[1;36m >>>>>>Creating model ...\033[0m")
     logger.info("\033[1;36m >>>>>>Classes: {}\033[0m".format(args.classes))
     logger.info(model)
     print(args)
 
     value_scale = 255
-    #imageNet图像的均值方差
     mean = [0.485,0.456,0.406]
     mean = [item * value_scale for item in mean]
     std = [0.229, 0.224, 0.225]
