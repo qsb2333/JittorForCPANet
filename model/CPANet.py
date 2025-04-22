@@ -63,7 +63,7 @@ class cpanet(nn.Module):
                 resnet = models.resnet101(pretrained=pretrained)
             elif layers ==152:
                 resnet = models.resnet152(pretrained=pretrained)
-            self.layer0 = nn.Sequential(resnet.conv1,resnet.maxpool)
+            self.layer0 = nn.Sequential(resnet.conv1, resnet.bn1, resnet.relu, resnet.maxpool)
             # self.layer0 = nn.Sequential(resnet.conv1, resnet.bn1, resnet.relu1,
             #                             resnet.conv2, resnet.bn2, resnet.relu2,
             #                             resnet.conv3, resnet.bn3, resnet.relu3, resnet.maxpool)
