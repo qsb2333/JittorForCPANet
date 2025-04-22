@@ -36,8 +36,6 @@ TRAIN:
 #  shot: 5
   save_path: exp/SSD/fold0_resnet50/model_1shot   # model saved path
   shot: 1
-  weight:   # load weight for fine-tuning or testing
-  resume:                                         # path to latest checkpoint (default: none)
   evaluate: True
   split: 0
   vgg: False # use vgg as backbone or not
