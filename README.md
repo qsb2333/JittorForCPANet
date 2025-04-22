@@ -1,3 +1,4 @@
+
 # CPANet-Jittor (Jittor Implementation of [CPANet](https://ieeexplore.ieee.org/document/10049179))
 
 [![Jittor](https://img.shields.io/badge/Jittor-1.3.9.14-blue)](https://cg.cs.tsinghua.edu.cn/jittor/)
@@ -6,13 +7,13 @@
 - [环境配置](#环境配置)
 - [数据集FSSD-12](#数据集FSSD-12)
 - [训练与测试](#训练与测试)
-- [模型训练参数](#模型参数)
+- [模型训练参数](#模型训练参数)
 - [基准实验](#基准实验)
   - [Backbone对比实验](#backbone对比实验)
   -  [loss曲线](#loss曲线)
 - [消融实验](#消融实验)
 - [源码错误与问题](#源码错误与问题)
-- [复现过程中Jittor框架的错误和与PyTorch关键区别](#复现过程中Jittor框架的错误和与pytorch关键区别)
+- [复现过程中Jittor框架的bug和与PyTorch关键区别](#复现过程中Jittor框架的bug和与PyTorch关键区别)
 - [总结](#总结)
 
 ## 环境配置
@@ -26,8 +27,10 @@ Jittor: 1.3.1.18
 ```
 
 ---
-
 ## 数据集FSSD-12
+### 数据下载
+- 数据集FSSD-12： [https://pan.baidu.com/s/1_BORNJrO4msD0OPEcVSc-Q?pwd=9m10](https://pan.baidu.com/s/1_BORNJrO4msD0OPEcVSc-Q?pwd=9m10)提取码: `9m10`
+- 
 ### 数据划分
 | Fold | 缺陷类别 |
 |------|----------|
@@ -35,8 +38,6 @@ Jittor: 1.3.1.18
 | 1    | oil-spot, water-spot, patch, punching |
 | 2    | red-iron-sheet, scratch, roll-printing, inclusion |
 
-### 数据下载
-- 数据集FSSD-12： [https://pan.baidu.com/s/1_BORNJrO4msD0OPEcVSc-Q?pwd=9m10](https://pan.baidu.com/s/1_BORNJrO4msD0OPEcVSc-Q?pwd=9m10)提取码: `9m10`
 ```text
   ├──CPANet/
   └──FSSD-12/
@@ -59,10 +60,10 @@ Jittor: 1.3.1.18
 
 ---
 
-## 训练与测试脚本
+## 训练与测试
 ```bash
 python train.py --config config/SSD/fold0_vgg16.yaml
-python train.py --config config/SSD/fold1_resnet50.yaml
+python train.py --config config/SSD/fold0_resnet50.yaml
 ```
 
 ---
@@ -80,25 +81,26 @@ python train.py --config config/SSD/fold1_resnet50.yaml
 1. **实验资源限制**  
    由于计算资源和时间有限，本实验及后续部分实验仅在 **1-shot 的 Fold-0** 配置下进行，未能全面覆盖所有 folds 和多种 shot 设置。
 2. **模型测试结果存在波动**  
-   实验过程中发现模型测试结果存在一定波动，并非完全稳定。例如，在 **VGG16 - Fold0** 实验中，`mIoU` 测试结果在多次运行中会浮动于 **0.4978 ~ 0.5214** 区间之间（该范围为多次实验测试所得的上下界）。因此，部分指标结果可能略有偏差。
-3. **关于 ResNet 预训练参数**  
-   原论文未公开其 ResNet 变体的预训练模型参数。因此，表格中所列的 **ResNet-50** 实验结果基于 **ImageNet 上的标准预训练模型**，并非完全复现原论文配置，故其性能表现可能与原文报告存在一定差异，实验结果仅供参考。
+   实验过程中发现模型测试结果存在一定波动，并非完全稳定。例如，在 **VGG-16 - Fold0** 实验中，`mIoU` 测试结果在多次运行中会浮动于 **0.4978 ~ 0.5214** 区间之间（该范围为多次实验测试所得的上下界）。因此，部分指标结果可能略有偏差。
+3. **关于 Backbone  预训练参数**  
+   由于原论文未公开其 ResNet 变体的预训练模型参数，所以表格中所列的 **ResNet-50** 实验结果基于 **ImageNet 上的标准预训练模型**，并非完全复现原论文配置，故其性能表现可能与原文报告存在一定差异，实验结果仅供参考。
+   因此，**本项目后续实验均基于 VGG-16 作为 Backbone 进行展开**。
 ---
 
 ### Backbone对比实验
 #### jittor版本
 | Backbone | Method | MIoU (1-shot) | FB-IoU (1-shot) |
 |----------|--------|---------------|-----------------|
-| VGG16    | Ours   | 52.14         | 70.63            |
-| ResNet50 | Ours   | 58.07         | 74.42            |
+| VGG-16    | Ours   | 52.14         | 70.63            |
+| ResNet-50 | Ours   | 58.07         | 74.42            |
 #### pytorch版本（原论文结果）
 | Backbone | Method | MIoU (1-shot) | FB-IoU (1-shot) |
 |----------|--------|---------------|-----------------|
-| VGG16    | Ours   | 50.8         | 69.1            |
-| ResNet50 | Ours   | 66.0         | 76.1           |
+| VGG-16    | Ours   | 50.8         | 69.1            |
+| ResNet-50 | Ours   | 66.0         | 76.1           |
 ---
 ### loss曲线
-本部分展示了以 **VGG16** 作为主干网络（Backbone）在 **Fold 0** 条件下训练和测试过程中记录的 **Loss 曲线**，用于直观观察模型的收敛情况和性能变化。
+本部分展示了以 **VGG-16** 作为主干网络（Backbone）在 **Fold 0** 条件下训练和测试过程中记录的 **Loss 曲线**，用于直观观察模型的收敛情况和性能变化。
 
 - **训练集 Loss 曲线：**  
   ![Train Loss Curve](./loss_curves/loss_train.png)
@@ -108,9 +110,9 @@ python train.py --config config/SSD/fold1_resnet50.yaml
 
 ---
 ## 消融实验
-## 模块间组件分析（基于 VGG16）
+## 模块间组件分析（基于 VGG-16）
 
-本部分展示了在以 **VGG16** 为主干网络的前提下，对模型中的关键模块（CPP、SA、SSA）进行组件级别的消融实验。
+本部分展示了在以 **VGG-16** 为主干网络的前提下，对模型中的关键模块（CPP、SA、SSA）进行组件级别的消融实验。
 
 ### 实验设定
 
@@ -124,6 +126,7 @@ python train.py --config config/SSD/fold1_resnet50.yaml
  ---
 
 ### 模块消融实验结果（1-Shot）
+#### jittor版本（VGG-16）
 | CPP | SA  | SSA | MIoU(1-shot) | FB-IoU(1-shot) |
 |:----:|:----:|:----:|:------------:|:--------:|
 | ✗   | ✗   | ✗   | 48.73        | 68.96    |
@@ -131,27 +134,45 @@ python train.py --config config/SSD/fold1_resnet50.yaml
 | ✓   | ✓   | ✗   | 46.84        | 67.23    |
 | ✗   | ✗   | ✓   | 51.36        | 70.28    |
 | ✓   | ✓   | ✓   | **52.14**    | **70.63** |
+
+#### pytorch版本（ResNet-50）
+| CPP | SA  | SSA | MIoU(1-shot) | FB-IoU(1-shot) |
+|:----:|:----:|:----:|:------------:|:--------:|
+| ✗   | ✗   | ✗   | 57.7        | 71.4    |
+| ✓   | ✗   | ✗   | 58.3        | 72.6    |
+| ✓   | ✓   | ✗   | 65.8        | 61.2    |
+| ✗   | ✗   | ✓   | 59.3        | 71.9    |
+| ✓   | ✓   | ✓   | **66.0**    | **76.1** |
+
 >  **说明：**
 > - `✓` 表示该模块被启用，`✗` 表示未启用；
 ---
 
-## 辅助 Loss 超参数 k 的选择（基于 VGG16）
+## 辅助 Loss 超参数 k 的选择（基于 VGG-16）
 
 模型的总损失函数由两个独立的损失项线性组合而成，其中超参数 $k$ 控制辅助损失（SA分支）的权重。为确定最佳的超参数设置，我们在 $k \in \{0, 0.2, 0.4, 0.6, 0.8, 1.0\}$ 范围内进行了消融实验。
 
 > 当 $k=0$ 时，SA 分支将完全失效，相当于移除辅助损失路径。
 
 ### 不同 k 值下的模型性能（1-Shot）
-
+#### jittor版本（VGG-16）
 | k   | MIoU(1-shot) | FB-IoU(1-shot) |
 |:---:|:------------:|:--------:|
-| 0.0 | 44.20        | 67.2    |
-| 0.2 | 48.79        | **74.8**|
+| 0.0 | 44.20        | 67.24    |
+| 0.2 | 48.79        | 69.92|
 | 0.4 | **52.14**    | 70.6    |
-| 0.6 | 50.39        | 72.2    |
+| 0.6 | 50.39        | **72.2**    |
 | 0.8 | 49.39        | 69.93   |
 | 1.0 | 48.28        | 69.79   |
-
+#### pytorch版本（ResNet-50）
+| k   | MIoU(1-shot) | FB-IoU(1-shot) |
+|:---:|:------------:|:--------:|
+| 0.0 | 61.8        | 72.9    |
+| 0.2 | 65.2        | 74.8|
+| 0.4 | **66.0**    | **76.1** |
+| 0.6 | 63.4        | 74.8    |
+| 0.8 | 62.8        | 74.5   |
+| 1.0 | 63.8        | 74.7   |
 ---
 ## 源码错误与问题
 
@@ -171,7 +192,7 @@ if self.training:
 ```
 ---
 
-## 复现过程中Jittor框架的错误和与PyTorch关键区别
+## 复现过程中Jittor框架的bug和与PyTorch关键区别
 在使用 Jittor 框架复现 CPANet 的过程中，发现了一些与 PyTorch 不一致的实现细节与潜在错误。以下内容将逐一介绍这些差异及其对结果的影响，并配以对比代码说明。
 
 ---
@@ -179,6 +200,8 @@ if self.training:
 ### 1、`jittor.misc.histc` 源码存在边界处理问题
 
 Jittor 中 `histc` 函数在处理边界值（例如最大值等于 `max` 的情况）时，行为与 PyTorch 不一致。
+
+具体表现为，输入数据 [0, 0, 1, 1, 0, 1, 2, 2, 2]，设置参数 bins=3，min=0，max=2 时，PyTorch 输出为 [3., 3., 3.]，而 Jittor 输出为 [3., 3., 1.]。说明 Jittor 在处理最大边界值 2 时未正确计入直方图中。
 
 #### 问题描述：
 
@@ -269,14 +292,13 @@ optimizer.step(loss)  # 自动完成 backward + update
 ----------
 ## 总结
 
-本次实验基于 **Jittor 框架** 复现了 **[CPANet](https://ieeexplore.ieee.org/document/10049179)** 网络结构。实验过程中，虽然成功实现了 CPANet 的整体网络逻辑和训练流程，但复现效果仍存在一定的差距，可能由以下因素造成：
+本次实验基于 **Jittor 框架** 复现了 **[CPANet](https://ieeexplore.ieee.org/document/10049179)** 的网络结构。实验过程中，虽然成功实现了 CPANet 的整体网络逻辑和训练流程，但复现效果仍存在一定的差距。
 
 ### 存在问题与挑战
-
 - 对 Jittor 框架的使用尚不够熟练，尤其在某些函数接口与 PyTorch 的差异方面（详见前述差异分析部分）；
-- 缺乏原论文中特定 **预训练参数**，本实验采用标准 ResNet50 权重作为替代，可能影响最终性能；
+- 缺乏原论文中特定 **预训练参数**，本实验采用标准 ResNet-50 权重作为替代，可能影响最终性能；
 - 个人能力与调试经验尚显不足，在参数调优、调试策略等方面仍有待提升；
-- 模型测试结果存在一定波动。例如，VGG16 作为 backbone 在 fold-0 上的 mIoU 浮动范围为 `0.4978 ~ 0.5214`，其余 folds 也表现出类似的波动情况。这种不稳定性可能与模型结构、训练策略或框架实现细节有关。
+- 模型测试结果存在一定波动。例如，VGG-16 作为 backbone 在 fold-0 上的 mIoU 浮动范围为 `0.4978 ~ 0.5214`，其余 folds 也表现出类似的波动情况。这种不稳定性可能与模型结构、训练策略或框架实现细节有关。
 
 ### 收获与成长
 
@@ -286,4 +308,3 @@ optimizer.step(loss)  # 自动完成 backward + update
 - 熟悉了从 PyTorch 到 Jittor 的迁移过程，增强了框架迁移与兼容调试能力。
 
 ---
-
