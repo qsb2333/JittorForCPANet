@@ -48,16 +48,12 @@ def poly_learning_rate(optimizer, base_lr, curr_iter, max_iter, power=0.9, index
 
 
 def histc(input, bins, min=0., max=0.):
-    '''
-    计算输入的N维数组的直方图。
-    '''
     if min == 0 and max == 0:
         min, max = input.min(), input.max()
     assert min < max
     bin_length = (max - min) / bins
     histc = jt.floor((input[jt.logical_and(input >= min, input <= max)] - min) / bin_length)
-    histc = jt.minimum(histc, bins - 1).int().reshape(-1)  # 修正关键行
-    #["@e0(i0)"] 映射规则 用 histc[i0] 作为输出下标
+    histc = jt.minimum(histc, bins - 1).int().reshape(-1)  
     hist = jt.ones_like(histc).float().reindex_reduce("add", [bins, ], ["@e0(i0)"], extras=[histc])
     if hist.sum() != histc.shape[0]:
         hist[-1] += 1
