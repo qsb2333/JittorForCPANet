@@ -341,7 +341,6 @@ def validate(val_loader, model, criterion):
 
 if __name__ == '__main__':
     main()
-    print(1)
 
 
 
