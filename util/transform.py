@@ -96,7 +96,7 @@ class Resize(object):
 
 class test_Resize(object):
     # 将输入图像和标签调整为给定的大小
-    #和Resize的区别是更加严格控制大小，如果原尺寸大于缩放的尺寸则不进行
+
     def __init__(self, size):
         self.size = size
 
