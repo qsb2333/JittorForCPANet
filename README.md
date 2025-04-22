@@ -7,11 +7,11 @@
 - [环境配置](#环境配置)
 - [数据集FSSD-12](#数据集FSSD-12)
 - [训练与测试](#训练与测试)
-- [模型训练参数](#模型训练参数)
 - [基准实验](#基准实验)
   - [Backbone对比实验](#backbone对比实验)
   -  [loss曲线](#loss曲线)
 - [消融实验](#消融实验)
+- [模型训练参数](#模型训练参数)
 - [源码错误与问题](#源码错误与问题)
 - [复现过程中Jittor框架的bug和与PyTorch关键区别](#复现过程中Jittor框架的bug和与PyTorch关键区别)
 - [总结](#总结)
@@ -65,13 +65,6 @@ Jittor: 1.3.1.18
 python train.py --config config/SSD/fold0_vgg16.yaml
 python train.py --config config/SSD/fold0_resnet50.yaml
 ```
-
----
-## 模型训练参数
-本项目中得到的所有模型训练参数，包括基准实验与消融实验，均已整理完毕。您可通过以下链接查看并下载。
-- 训练参数：[https://pan.baidu.com/s/1ZgsZIOBtLWlP2s3bvI51IQ](https://pan.baidu.com/s/1ZgsZIOBtLWlP2s3bvI51IQ)提取码: `qsbq`
-
-
 
 ---
 ## 基准实验
@@ -173,6 +166,11 @@ python train.py --config config/SSD/fold0_resnet50.yaml
 | 0.6 | 63.4        | 74.8    |
 | 0.8 | 62.8        | 74.5   |
 | 1.0 | 63.8        | 74.7   |
+---
+
+## 模型训练参数
+本项目中得到的所有模型训练参数，包括基准实验与消融实验，均已整理完毕。您可通过以下链接查看并下载。
+- 训练参数：[https://pan.baidu.com/s/1ZgsZIOBtLWlP2s3bvI51IQ](https://pan.baidu.com/s/1ZgsZIOBtLWlP2s3bvI51IQ)提取码: `qsbq`
 ---
 ## 源码错误与问题
 
