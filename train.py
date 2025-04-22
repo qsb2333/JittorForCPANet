@@ -91,27 +91,6 @@ def main():
     logger.info(model)
     print(args)
 
-    if args.weight:
-        if os.path.isfile(args.weight):
-            logger.info("=> loading weight '{}'".format(args.weight))
-            checkpoint = jt.load(args.weight)
-            model.load_state_dict(checkpoint['state_dict'])
-            logger.info("=> loaded weight '{}'".format(args.weight))
-        else:
-            logger.info("=> no weight found at '{}'".format(args.weight))
-
-    if args.resume:
-        if os.path.isfile(args.resume):
-            logger.info("=> loading checkpoint '{}'".format(args.resume))
-            checkpoint = jt.load(args.resume)
-            args.start_epoch = checkpoint['epoch']
-            model.load_state_dict(checkpoint['state_dict'])
-            optimizer.load_state_dict(checkpoint['optimzier'])
-            logger.info("=> loaded checkpoint '{}' (epoch {})".format(args.resume, checkpoint['epoch']))
-        else:
-            logger.info("=> no checkpoint found at '{}'".format(args.resume))
-
-
     value_scale = 255
     #imageNet图像的均值方差
     mean = [0.485,0.456,0.406]
