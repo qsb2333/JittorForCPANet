@@ -228,6 +228,20 @@ print(hist)  # [3. 3. 1.]
 
  **原因**：Jittor 的实现没有将 `max` 本身计入统计中，导致最后一桶数据缺失。
 
+#### 修改后代码：
+```python
+def histc(input, bins, min=0., max=0.):  
+    if min == 0 and max == 0:  
+       min, max = input.min(), input.max()  
+    assert min < max  
+    bin_length = (max - min) / bins  
+    histc = jt.floor((input[jt.logical_and(input >= min, input <= max)] - min) / bin_length)  
+    histc = jt.minimum(histc, bins - 1).int().reshape(-1)  # 修正关键行  
+    hist = jt.ones_like(histc).float().reindex_reduce("add", [bins, ], ["@e0(i0)"], extras=[histc])  
+    if hist.sum() != histc.shape[0]:  
+        hist[-1] += 1  
+    return hist
+```
 ----------
 
 ### 2、`max` 与 `argmax` 返回值结构不同
@@ -302,7 +316,7 @@ optimizer.step(loss)  # 自动完成 backward + update
 
 ### 收获与成长
 
-- **深入理解了 CPANet 的模块设计思想与注意力机制实现**，对 Few-Shot 分割任务的关键技术有了更深刻认识；
+- **深入理解了 CPANet 的模块设计思想与实现**，对 Few-Shot 分割任务的关键技术有了更深刻认识；
 - **掌握了 Jittor 框架的基本用法与模型构建流程**，包括数据加载、模型定义、训练与测试过程；
 - 积累了进行复现类研究项目的实践经验，对未来开展深度学习模型设计与复现具有重要指导意义；
 - 熟悉了从 PyTorch 到 Jittor 的迁移过程，增强了框架迁移与兼容调试能力。
