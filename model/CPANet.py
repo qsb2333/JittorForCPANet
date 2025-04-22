@@ -152,17 +152,17 @@ class cpanet(nn.Module):
         # self.CPP = nn.AdaptiveAvgPool2d((1,1))
 
     def execute(self, x, s_x, s_y,y=None):
-        #(4,3,200,200)
+        #(2,3,200,200)
         x_size = x.size()
         h = int(x_size[-1])
         w = int(x_size[-2])
 
         with jt.no_grad():
             #提取query特征
-            query_feat0 = self.layer0(x) #(4,128,50,50)
-            query_feat1 = self.layer1(query_feat0) #（4，256，50，50）
-            query_feat2 = self.layer2(query_feat1) # （4，512，25，25）
-            query_feat3 = self.layer3(query_feat2) #（4，1024，25，25）
+            query_feat0 = self.layer0(x) #(2,128,50,50)
+            query_feat1 = self.layer1(query_feat0) #（2，256，50，50）
+            query_feat2 = self.layer2(query_feat1) # （2，512，25，25）
+            query_feat3 = self.layer3(query_feat2) #（2，1024，25，25）
 
             if self.vgg:
                 #需要上采样
@@ -183,10 +183,10 @@ class cpanet(nn.Module):
 
             with jt.no_grad():
                 # 提取support特征
-                support_feat0 = self.layer0(s_x[:,i,:,:,:])  # (4,128,50,50)
-                support_feat1 = self.layer1(support_feat0)  # （4，256，50，50）
-                support_feat2 = self.layer2(support_feat1)  # （4，512，25，25）
-                support_feat3 = self.layer3(support_feat2)  # （4，1024，25，25）
+                support_feat0 = self.layer0(s_x[:,i,:,:,:])  # (2,128,50,50)
+                support_feat1 = self.layer1(support_feat0)  # （2，256，50，50）
+                support_feat2 = self.layer2(support_feat1)  # （2，512，25，25）
+                support_feat3 = self.layer3(support_feat2)  # （2，1024，25，25）
 
                 if self.vgg:
                     # 需要上采样
@@ -258,13 +258,3 @@ class cpanet(nn.Module):
             return query_pred_mask,query_pred_mask_save
 
 
-if __name__ == '__main__':
-    jt.flags.use_cuda = 1
-    model = cpanet(shot=1)
-    model.train()
-    x = jt.rand(1, 3, 200, 200)
-    s_x = jt.rand(1, 1, 3, 200, 200)
-    s_y = jt.ones((1, 1,200,200))
-    y = jt.ones((1, 1,200,200))
-    pred, loss = model(x, s_x, s_y,y)
-    print("pred shape:", pred.shape, "loss:", loss.item())
